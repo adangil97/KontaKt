@@ -5,41 +5,64 @@ import com.example.contacts.ContactDatabase
 import com.example.contacts.data.ContactRepository
 import com.example.contacts.domain.ContactRequest
 import com.example.contacts.domain.ContactResponse
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 
-class ContactLocalRepository(
-    private val contactDatabase: ContactDatabase
-) : ContactRepository {
+class ContactLocalRepository(private val contactDatabase: ContactDatabase) : ContactRepository {
+
+    private val contactDao by lazy {
+        contactDatabase.contactDatabaseQueries
+    }
 
     override fun getAll(): Flow<List<ContactResponse>> {
-        return contactDatabase.contactDatabaseQueries.getAllContacts().asFlow().map {
-            it.executeAsList().map { contact ->
+        return contactDao.getAllContacts().asFlow().map { query ->
+            query.executeAsList().map { contact ->
                 contact.toContactResponse()
             }
         }
     }
 
-    override fun search(query: String): Flow<List<ContactResponse>> {
-        TODO("Not yet implemented")
+    override fun search(searchQuery: String): Flow<List<ContactResponse>> {
+        return contactDao.searchContacts(searchQuery).asFlow().map { query ->
+            query.executeAsList().map { contact ->
+                contact.toContactResponse()
+            }
+        }
     }
 
-    override suspend fun save(contact: ContactRequest): ContactResponse {
-        TODO("Not yet implemented")
+    override suspend fun save(contact: ContactRequest) {
+        withContext(Dispatchers.IO) {
+            contactDao.saveContact(contact.toContactDB())
+        }
     }
 
     override suspend fun update(
         id: Long,
         contact: ContactRequest
-    ): ContactResponse? {
-        TODO("Not yet implemented")
+    ) {
+        withContext(Dispatchers.IO) {
+            getById(id)?.let {
+                val newContact = contact.toContactDB().copy(id = it.id)
+                contactDao.saveContact(newContact)
+            }
+        }
     }
 
     override suspend fun getById(id: Long): ContactResponse? {
-        TODO("Not yet implemented")
+        return withContext(Dispatchers.IO) {
+            contactDao.getContactById(id).executeAsOneOrNull()?.toContactResponse()
+        }
     }
 
     override suspend fun deleteById(id: Long): ContactResponse? {
-        TODO("Not yet implemented")
+        return withContext(Dispatchers.IO) {
+            getById(id)?.let {
+                contactDao.deleteContactById(id)
+                it
+            }
+        }
     }
 }

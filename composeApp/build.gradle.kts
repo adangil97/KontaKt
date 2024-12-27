@@ -105,6 +105,7 @@ sqldelight {
     databases {
         create("ContactDatabase") {
             packageName.set("com.example.contacts")
+            generateAsync = true
         }
     }
 }

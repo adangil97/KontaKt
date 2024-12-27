@@ -1,5 +1,5 @@
 CREATE TABLE Contact (
-    id INTEGER PRIMARY KEY NOT NULL,
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     name TEXT NOT NULL,
     lastName TEXT,
     phoneNumber TEXT,
@@ -14,5 +14,14 @@ INSERT OR REPLACE INTO Contact VALUES ?;
 getAllContacts:
 SELECT * FROM Contact;
 
+searchContacts:
+SELECT * FROM Contact
+    WHERE name LIKE ('%' || :query || '%') OR
+        lastName LIKE ('%' || :query || '%') OR
+        notes LIKE ('%' || :query || '%');
+
 getContactById:
 SELECT * FROM Contact WHERE id = :id;
+
+deleteContactById:
+DELETE FROM Contact WHERE id = :id;

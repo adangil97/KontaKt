@@ -13,17 +13,17 @@ class FakeContactRepository : ContactRepository {
         return flowOf(contactList.sortedBy { it.id })
     }
 
-    override fun search(query: String): Flow<List<ContactResponse>> {
+    override fun search(searchQuery: String): Flow<List<ContactResponse>> {
         return flowOf(
             contactList.filter {
-                it.name.contains(query) ||
-                        it.lastName.orEmpty().contains(query) ||
-                        it.notes.orEmpty().contains(query)
+                it.name.contains(searchQuery) ||
+                        it.lastName.orEmpty().contains(searchQuery) ||
+                        it.notes.orEmpty().contains(searchQuery)
             }.sortedBy { it.id }
         )
     }
 
-    override suspend fun save(contact: ContactRequest): ContactResponse {
+    override suspend fun save(contact: ContactRequest) {
         val newContact = ContactResponse(
             id = (contactList.size + 1).toLong(),
             name = contact.name,
@@ -34,14 +34,13 @@ class FakeContactRepository : ContactRepository {
             notes = contact.notes
         )
         contactList.add(newContact)
-        return newContact
     }
 
     override suspend fun update(
         id: Long,
         contact: ContactRequest
-    ): ContactResponse? {
-        return getById(id)?.let {
+    ) {
+        getById(id)?.let {
             val newContact = ContactResponse(
                 id = it.id,
                 name = contact.name,
@@ -52,7 +51,6 @@ class FakeContactRepository : ContactRepository {
                 notes = contact.notes
             )
             contactList.add(newContact)
-            newContact
         }
     }
 

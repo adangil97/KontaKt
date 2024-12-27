@@ -8,14 +8,14 @@ interface ContactRepository {
 
     fun getAll(): Flow<List<ContactResponse>>
 
-    fun search(query: String): Flow<List<ContactResponse>>
+    fun search(searchQuery: String): Flow<List<ContactResponse>>
 
-    suspend fun save(contact: ContactRequest): ContactResponse
+    suspend fun save(contact: ContactRequest)
 
     suspend fun update(
         id: Long,
         contact: ContactRequest
-    ): ContactResponse?
+    )
 
     suspend fun getById(id: Long): ContactResponse?
 
