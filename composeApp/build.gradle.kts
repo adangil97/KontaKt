@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.sqlDelight)
     id("com.google.devtools.ksp")
     alias(libs.plugins.mockkmp)
 }
@@ -17,7 +18,7 @@ kotlin {
             jvmTarget.set(JvmTarget.JVM_11)
         }
     }
-    
+
     listOf(
         iosX64(),
         iosArm64(),
@@ -28,12 +29,17 @@ kotlin {
             isStatic = true
         }
     }
-    
+
     sourceSets {
-        
+
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
+            implementation(libs.sqlDelight.driver.android)
+            implementation(libs.koin.android)
+        }
+        iosMain.dependencies {
+            implementation(libs.sqlDelight.driver.native)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -44,6 +50,8 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
+            implementation(libs.sqlDelight.coroutines.extensions)
+            implementation(libs.koin.core)
         }
         commonTest.dependencies {
             implementation(kotlin("test"))
@@ -93,3 +101,10 @@ dependencies {
     debugImplementation(compose.uiTooling)
 }
 
+sqldelight {
+    databases {
+        create("ContactDatabase") {
+            packageName.set("com.example.contacts")
+        }
+    }
+}

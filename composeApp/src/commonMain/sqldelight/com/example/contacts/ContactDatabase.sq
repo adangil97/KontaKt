@@ -1,0 +1,6 @@
+CREATE TABLE Contact (
+    id INTEGER PRIMARY KEY NOT NULL
+);
+
+saveContact:
+INSERT OR REPLACE INTO Contact VALUES ?;
