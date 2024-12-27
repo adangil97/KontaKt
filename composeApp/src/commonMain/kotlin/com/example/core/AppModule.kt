@@ -1,8 +1,8 @@
 package com.example.core
 
-import com.example.contacts.ContactDatabaseQueries
+import com.example.contacts.ContactDatabase
 import org.koin.dsl.module
 
 val appModules = module {
-    single { ContactDatabaseQueries(createDriver()) }
+    single<ContactDatabase> { ContactDatabase.invoke(createDriver()) }
 }

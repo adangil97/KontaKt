@@ -2,51 +2,62 @@ package usecases
 
 import app.cash.turbine.test
 import com.example.contacts.data.ContactRepository
-import com.example.contacts.domain.ContactResponse
+import com.example.contacts.domain.ContactRequest
 import com.example.contacts.usecases.SearchContacts
-import kotlinx.coroutines.flow.flowOf
+import data.FakeContactRepository
 import kotlinx.coroutines.runBlocking
-import org.kodein.mock.Mock
-import org.kodein.mock.generated.injectMocks
-import org.kodein.mock.tests.TestsWithMocks
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class SearchContactsTest : TestsWithMocks() {
-    @Mock
-    lateinit var contactRepository: ContactRepository
+class SearchContactsTest {
+    private lateinit var contactRepository: ContactRepository
     lateinit var searchContacts: SearchContacts
-
-    private val fakeContact = ContactResponse(
-        id = 1,
-        name = "John Doe",
-        phoneNumber = "123456789"
-    )
-
-    override fun setUpMocks() = mocker.injectMocks(this)
 
     @BeforeTest
     fun setUp() {
-        mocker.reset()
-        mocker.injectMocks(this)
+        contactRepository = FakeContactRepository()
+        val contactsToInsert = mutableListOf<ContactRequest>()
+        (1..10).forEach {
+            contactsToInsert.add(
+                ContactRequest(
+                    name = "Name $it",
+                    lastName = "lastName $it",
+                    phoneNumber = "$it",
+                    email = "$it@$it"
+                )
+            )
+        }
+        contactsToInsert.shuffle()
+        runBlocking {
+            contactsToInsert.forEach { contactRepository.save(it) }
+        }
         searchContacts = SearchContacts(contactRepository)
     }
 
     @Test
-    fun `should retrieve matching contacts when searching`() = runBlocking {
-        // Given
-        val query = "John"
-        val expectedContacts = listOf(fakeContact)
-        val fakeContactResponse = flowOf(expectedContacts)
-        every { searchContacts(query) } returns fakeContactResponse
+    fun `should retrieve matching contacts when searching with not empty query`() = runBlocking {
+        val query = "1"
+        val expectedContactSie = 2
 
         // When
         searchContacts(query).test {
             // Then
-            assertEquals(expectedContacts, awaitItem())
+            assertEquals(expectedContactSie, awaitItem().size)
             awaitComplete()
         }
-        verify { searchContacts(query) }
+    }
+
+    @Test
+    fun `should retrieve all contacts when searching with empty query`() = runBlocking {
+        val query = ""
+        val expectedContactSie = 10
+
+        // When
+        searchContacts(query).test {
+            // Then
+            assertEquals(expectedContactSie, awaitItem().size)
+            awaitComplete()
+        }
     }
 }

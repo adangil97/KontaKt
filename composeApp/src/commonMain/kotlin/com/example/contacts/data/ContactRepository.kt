@@ -15,7 +15,7 @@ interface ContactRepository {
     suspend fun update(
         id: Long,
         contact: ContactRequest
-    ): ContactResponse
+    ): ContactResponse?
 
     suspend fun getById(id: Long): ContactResponse?
 

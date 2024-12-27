@@ -2,52 +2,49 @@ package usecases
 
 import com.example.contacts.data.ContactRepository
 import com.example.contacts.domain.ContactRequest
-import com.example.contacts.domain.ContactResponse
 import com.example.contacts.usecases.UpdateContact
+import data.FakeContactRepository
 import kotlinx.coroutines.runBlocking
-import org.kodein.mock.Mock
-import org.kodein.mock.generated.injectMocks
-import org.kodein.mock.tests.TestsWithMocks
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertNull
 
-class UpdateContactsTest : TestsWithMocks() {
-    @Mock
-    lateinit var contactRepository: ContactRepository
+class UpdateContactsTest {
+    private lateinit var contactRepository: ContactRepository
     lateinit var updateContact: UpdateContact
-
-    private val fakeContact = ContactResponse(
-        id = 1,
-        name = "John Doe",
-        phoneNumber = "123456789"
-    )
-
-    private val fakeContactRequest = ContactRequest(
-        name = "John Doe",
-        phoneNumber = "123456789"
-    )
-
-    override fun setUpMocks() = mocker.injectMocks(this)
 
     @BeforeTest
     fun setUp() {
-        mocker.reset()
-        mocker.injectMocks(this)
+        contactRepository = FakeContactRepository()
+        runBlocking {
+            (1..10).forEach {
+                contactRepository.save(
+                    ContactRequest(
+                        name = "Name $it",
+                        lastName = "lastName $it",
+                        phoneNumber = "$it",
+                        email = "$it@$it"
+                    )
+                )
+            }
+        }
         updateContact = UpdateContact(contactRepository)
     }
 
     @Test
     fun `should update existing contact and return updated contact`() = runBlocking {
-        // Given
+        val contact = ContactRequest(name = "Fake name")
         val contactId = 1L
-        everySuspending { updateContact(contactId, fakeContactRequest) } returns fakeContact
+        val result = updateContact(contactId, contact)
+        assertEquals(contactId, result?.id)
+    }
 
-        // When
-        val result = updateContact(contactId, fakeContactRequest)
-
-        // Then
-        assertEquals(fakeContact, result)
-        verifyWithSuspend { updateContact(contactId, fakeContactRequest) }
+    @Test
+    fun `should return null when contact id not exists`() = runBlocking {
+        val contact = ContactRequest(name = "Fake name")
+        val contactId = -1L
+        val result = updateContact(contactId, contact)
+        assertNull(result)
     }
 }

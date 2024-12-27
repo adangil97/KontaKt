@@ -1,6 +1,18 @@
 CREATE TABLE Contact (
-    id INTEGER PRIMARY KEY NOT NULL
+    id INTEGER PRIMARY KEY NOT NULL,
+    name TEXT NOT NULL,
+    lastName TEXT,
+    phoneNumber TEXT,
+    email TEXT,
+    photo BLOB,
+    notes TEXT
 );
 
 saveContact:
 INSERT OR REPLACE INTO Contact VALUES ?;
+
+getAllContacts:
+SELECT * FROM Contact;
+
+getContactById:
+SELECT * FROM Contact WHERE id = :id;
