@@ -13,6 +13,12 @@ class ContactListViewModel(
     fun initialize() {
         fetchFromActions({
             if (it.searchQuery.isNotBlank()) {
+                updateState(
+                    currentState().copy(
+                        isLoading = false,
+                        query = it.searchQuery
+                    )
+                )
                 searchContacts(it.searchQuery)
             } else {
                 getContacts()
