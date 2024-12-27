@@ -6,9 +6,9 @@ import kotlinx.coroutines.flow.Flow
 
 interface ContactRepository {
 
-    suspend fun getAll(): Flow<ContactResponse>
+    fun getAll(): Flow<List<ContactResponse>>
 
-    suspend fun search(query: String): Flow<ContactResponse>
+    fun search(query: String): Flow<List<ContactResponse>>
 
     suspend fun save(contact: ContactRequest): ContactResponse
 

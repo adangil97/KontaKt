@@ -6,5 +6,5 @@ class GetContacts(
     private val contactRepository: ContactRepository
 ) {
 
-    suspend operator fun invoke() = contactRepository.getAll()
+    operator fun invoke() = contactRepository.getAll()
 }

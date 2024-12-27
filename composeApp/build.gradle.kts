@@ -6,6 +6,8 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    id("com.google.devtools.ksp")
+    alias(libs.plugins.mockkmp)
 }
 
 kotlin {
@@ -43,6 +45,20 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
         }
+        commonTest.dependencies {
+            implementation(kotlin("test"))
+            implementation(libs.kotlin.test)
+            implementation(libs.turbine)
+        }
+        androidUnitTest.dependencies {
+            implementation(kotlin("test-junit"))
+        }
+    }
+}
+
+mockmp {
+    onTest {
+        withHelper()
     }
 }
 
