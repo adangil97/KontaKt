@@ -52,6 +52,11 @@ kotlin {
             implementation(libs.androidx.lifecycle.runtime.compose)
             implementation(libs.sqlDelight.coroutines.extensions)
             implementation(libs.koin.core)
+            implementation(libs.voyager.navigator)
+            implementation(libs.voyager.koin)
+            implementation(libs.voyager.bottomsheet)
+            implementation(libs.voyager.screenmodel)
+            implementation(libs.voyager.transitions)
         }
         commonTest.dependencies {
             implementation(kotlin("test"))

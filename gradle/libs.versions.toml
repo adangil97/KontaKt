@@ -18,6 +18,7 @@ mockkmpVersion = "2.0.0"
 turbineVersion = "1.0.0"
 sqlDelight = "2.0.2"
 koin = "3.5.3"
+voyager = "1.0.0"
 
 [libraries]
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbineVersion" }
@@ -38,6 +39,11 @@ sqlDelight-driver-native = { module = "app.cash.sqldelight:native-driver", versi
 sqlDelight-coroutines-extensions = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "sqlDelight" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
+voyager-navigator = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyager" }
+voyager-koin = { module = "cafe.adriel.voyager:voyager-koin", version.ref = "voyager" }
+voyager-bottomsheet = { module = "cafe.adriel.voyager:voyager-bottom-sheet-navigator", version.ref = "voyager" }
+voyager-screenmodel = { module = "cafe.adriel.voyager:voyager-screenmodel", version.ref = "voyager" }
+voyager-transitions = { module = "cafe.adriel.voyager:voyager-transitions", version.ref = "voyager" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
