@@ -1,13 +1,65 @@
 package com.example.contacts.presentation.list
 
-import androidx.compose.material.Text
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.koin.getScreenModel
+import com.example.core.ActionsScreen
 import com.example.core.ContactUniqueScreen
+import com.example.core.ds.ContactSearchBar
+import kontakt.composeapp.generated.resources.Res
+import kontakt.composeapp.generated.resources.search_hint
+import org.jetbrains.compose.resources.stringResource
 
-class ContactListScreen: ContactUniqueScreen() {
+class ContactListScreen : ContactUniqueScreen() {
 
     @Composable
     override fun Content() {
-        Text("Hola mundo")
+        val viewModel: ContactListViewModel = getScreenModel()
+        val screenState by viewModel.state.collectAsState()
+        Scaffold(
+            modifier = Modifier.padding(top = 12.dp),
+            topBar = {
+                Column(modifier = Modifier.fillMaxWidth()) {
+                    ContactSearchBar(
+                        modifier = Modifier
+                            .fillMaxWidth(.9f)
+                            .align(Alignment.CenterHorizontally),
+                        hint = stringResource(Res.string.search_hint),
+                        initialText = screenState.query,
+                        onSearch = { query, _ ->
+                            viewModel.sendAction(ActionsScreen(searchQuery = query))
+                        }
+                    )
+                }
+            },
+        ) {
+            Box(modifier = Modifier.padding(it)) {
+                if (screenState.isLoading) {
+                    ContactListLoading()
+                } else {
+                    ContactListContent(
+                        contacts = screenState.contacts,
+                        modifier = Modifier.fillMaxSize().padding(8.dp),
+                        onContactClick = {
+
+                        }
+                    )
+                }
+            }
+        }
+        LaunchedEffect(false) {
+            viewModel.initialize()
+        }
     }
 }

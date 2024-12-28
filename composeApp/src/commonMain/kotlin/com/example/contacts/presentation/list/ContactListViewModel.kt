@@ -4,6 +4,7 @@ import com.example.contacts.presentation.toContactUiModel
 import com.example.contacts.usecases.GetContacts
 import com.example.contacts.usecases.SearchContacts
 import com.example.core.ActionsScreenModel
+import kotlinx.coroutines.delay
 
 class ContactListViewModel(
     private val getContacts: GetContacts,
@@ -21,6 +22,8 @@ class ContactListViewModel(
                 )
                 searchContacts(it.searchQuery)
             } else {
+                // Simple to show loading.
+                delay(1000L)
                 getContacts()
             }
         }) {

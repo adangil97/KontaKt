@@ -1,0 +1,4 @@
+<resources>
+    <string name="default_image_description">image</string>
+    <string name="msg_retry">Reintentar</string>
+</resources>
