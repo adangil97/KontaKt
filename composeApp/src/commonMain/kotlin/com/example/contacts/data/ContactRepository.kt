@@ -6,6 +6,8 @@ import kotlinx.coroutines.flow.Flow
 
 interface ContactRepository {
 
+    suspend fun getLastId(): Long
+
     fun getAll(): Flow<List<ContactResponse>>
 
     fun search(searchQuery: String): Flow<List<ContactResponse>>

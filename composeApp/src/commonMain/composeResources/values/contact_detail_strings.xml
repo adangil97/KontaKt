@@ -8,4 +8,6 @@
     <string name="contact_detail_phone">Telefono de contacto</string>
     <string name="contact_detail_email">Email de contacto</string>
     <string name="contact_detail_notes">Agregar nota</string>
+    <string name="contact_detail_note_label">Nota</string>
+    <string name="contact_detail_note_required">La nota es requerida</string>
 </resources>

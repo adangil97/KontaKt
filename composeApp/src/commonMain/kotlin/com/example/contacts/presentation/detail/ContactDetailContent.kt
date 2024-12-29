@@ -153,19 +153,13 @@ fun ContactDetailContent(
             items(contactUiModel.notes.orEmpty(), key = { it.id }) { note ->
                 NoteItem(
                     note = note,
-                    contactId = contactUiModel.id.takeIf { it != 0L },
                     onNoteActions = onNoteActions,
                     modifier = Modifier.fillMaxWidth(.8f).padding(8.dp)
                 )
             }
             item {
                 ContactTextButton(stringResource(Res.string.contact_detail_notes)) {
-                    onNoteActions(
-                        NoteActions.SaveNote(
-                            contactId = contactUiModel.id.takeIf { it != 0L },
-                            note = NoteUiModel()
-                        )
-                    )
+                    onNoteActions(NoteActions.SaveNote(NoteUiModel()))
                 }
                 if (contactUiModel.id != 0L) {
                     ContactSpacer(bottom = 120.dp)
@@ -227,7 +221,6 @@ fun ContactDetailContent(
 @Composable
 fun NoteItem(
     note: NoteUiModel,
-    contactId: Long?,
     onNoteActions: (NoteActions) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -246,7 +239,6 @@ fun NoteItem(
                 onNoteActions(
                     NoteActions.UpdateNote(
                         id = note.id,
-                        contactId = contactId,
                         note = note
                     )
                 )

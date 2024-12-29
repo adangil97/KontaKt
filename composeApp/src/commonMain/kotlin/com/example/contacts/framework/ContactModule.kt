@@ -14,7 +14,7 @@ val contactModule = module {
     single { DeleteContactById(get()) }
     single { GetContactById(get(), get()) }
     single { com.example.contacts.usecases.GetContacts(get()) }
-    single { SaveContact(get()) }
+    single { SaveContact(get(), get(), get()) }
     single { SearchContacts(get()) }
     single { UpdateContact(get()) }
     factory { ContactDetailViewModel(get(), get(), get(), get(), get(), get()) }

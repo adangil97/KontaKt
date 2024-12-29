@@ -26,3 +26,6 @@ SELECT * FROM Contact WHERE id = :id;
 
 deleteContactById:
 DELETE FROM Contact WHERE id = :id;
+
+findLastId:
+SELECT id FROM Contact ORDER BY id DESC LIMIT 1;

@@ -2,6 +2,7 @@ package com.example.contacts.presentation.detail
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -32,7 +33,9 @@ import com.example.core.ds.ContactCircularProgressBar
 import com.example.core.ds.ContactSelectorBottomSheet
 import com.example.core.ds.ContactTopAppBar
 import com.example.core.findNavigatorByKey
+import com.example.notes.presentation.ContactNoteBottomSheet
 import com.example.notes.presentation.NoteActions
+import com.example.notes.presentation.NoteUiModel
 import com.example.notes.presentation.NoteViewModel
 import com.preat.peekaboo.image.picker.ResizeOptions
 import com.preat.peekaboo.image.picker.SelectionMode
@@ -83,6 +86,8 @@ class ContactDetailScreen(private val contactId: Long? = null) : ContactUniqueSc
         ) { paddingContent ->
             val snackBarHostState = remember { SnackbarHostState() }
             var showImageBottomSheet by remember { mutableStateOf(false) }
+            var showNoteBottomSheet by remember { mutableStateOf(false) }
+            var note: NoteUiModel by remember { mutableStateOf(NoteUiModel()) }
             Box(modifier = Modifier.padding(paddingContent)) {
                 ContactDetailContent(
                     contactUiModel = screenState.contact,
@@ -95,20 +100,17 @@ class ContactDetailScreen(private val contactId: Long? = null) : ContactUniqueSc
                     },
                     onNoteActions = { noteActions ->
                         when (noteActions) {
-                            is NoteActions.DeleteNote -> {
-                                notesViewModel.deleteNote(noteActions.id)
+                            is NoteActions.DeleteNote -> notesViewModel.deleteNote(noteActions.id)
+
+                            is NoteActions.SaveNote -> {
+                                note = noteActions.note
+                                showNoteBottomSheet = true
                             }
 
-                            is NoteActions.SaveNote -> notesViewModel.dispatchNote(
-                                contactId = noteActions.contactId,
+                            is NoteActions.UpdateNote -> {
                                 note = noteActions.note
-                            )
-
-                            is NoteActions.UpdateNote -> notesViewModel.dispatchNote(
-                                id = noteActions.id,
-                                contactId = noteActions.contactId,
-                                note = noteActions.note
-                            )
+                                showNoteBottomSheet = true
+                            }
                         }
                         viewModel.updateNotes(contactId)
                     }
@@ -137,6 +139,25 @@ class ContactDetailScreen(private val contactId: Long? = null) : ContactUniqueSc
                         }
                     ) {
                         showImageBottomSheet = false
+                    }
+                }
+                if (showNoteBottomSheet) {
+                    ContactNoteBottomSheet(
+                        noteUiModel = note,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .fillMaxHeight(.45f)
+                            .align(Alignment.BottomCenter),
+                        onNote = {
+                            notesViewModel.dispatchNote(
+                                id = it.id.takeIf { id -> id != 0L },
+                                contactId = contactId,
+                                note = it
+                            )
+                            viewModel.updateNotes(contactId)
+                        }
+                    ) {
+                        showNoteBottomSheet = false
                     }
                 }
                 SnackbarHost(

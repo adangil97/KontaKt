@@ -15,6 +15,10 @@ class DBContactRepository(
     private val contactDao: ContactDatabaseQueries
 ) : ContactRepository {
 
+    override suspend fun getLastId(): Long = withContext(Dispatchers.IO) {
+        contactDao.findLastId().executeAsOneOrNull() ?: 1
+    }
+
     override fun getAll(): Flow<List<ContactResponse>> {
         return contactDao.getAllContacts().asFlow().map { query ->
             query.executeAsList().map { contact ->
