@@ -28,6 +28,7 @@ class ContactListScreen : ContactUniqueScreen() {
 
     @Composable
     override fun Content() {
+
         val viewModel: ContactListViewModel = getScreenModel()
         val screenState by viewModel.state.collectAsState()
         val navigator = LocalNavigator.currentOrThrow

@@ -77,6 +77,7 @@ fun ContactDetailContent(
                 ContactImage(
                     imageBitmap = photo.decodeToImageBitmap(),
                     modifier = Modifier
+                        .padding(12.dp)
                         .size(100.dp),
                     onClick = onRequestPhoto
                 ) {

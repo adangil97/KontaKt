@@ -6,4 +6,7 @@
     <string name="msg_update">Actualizar</string>
     <string name="msg_delete">Eliminar</string>
     <string name="msg_loading">...</string>
+    <string name="select_image">Seleccionar imagen:</string>
+    <string name="select_from_gallery">Galeria</string>
+    <string name="select_from_camera">Camara</string>
 </resources>

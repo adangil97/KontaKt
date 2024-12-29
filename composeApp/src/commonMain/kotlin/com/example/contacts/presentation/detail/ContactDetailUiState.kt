@@ -4,7 +4,7 @@ import com.example.contacts.presentation.ContactUiModel
 
 data class ContactDetailUiState(
     val isLoading: Boolean = false,
-    val contact: ContactUiModel? = null
+    val contact: ContactUiModel = ContactUiModel()
 )
 
 sealed class ContactDetailUiEffects {

@@ -24,13 +24,14 @@ class ContactDetailViewModel(
             if (id != null) {
                 updateState(currentState().copy(isLoading = true))
                 delay(1000)
-                val contact = getContactById(id)?.toContactUiModel()
-                updateState(
-                    currentState().copy(
-                        isLoading = false,
-                        contact = contact
+                getContactById(id)?.toContactUiModel()?.let { contact ->
+                    updateState(
+                        currentState().copy(
+                            isLoading = false,
+                            contact = contact
+                        )
                     )
-                )
+                }
             }
         }
     }

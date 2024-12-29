@@ -40,7 +40,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.core.hideKeyboard
 import kontakt.composeapp.generated.resources.Res
 import kontakt.composeapp.generated.resources.default_image_description
 import org.jetbrains.compose.resources.stringResource
@@ -110,7 +109,7 @@ fun ContactSearchBar(
             keyboardActions = KeyboardActions(
                 onSearch = {
                     onSearch(text, false)
-                    hideKeyboard()
+                    com.example.core.hideKeyboard()
                     keyboard?.hide()
                     focusManager.clearFocus()
                     active = false
@@ -129,7 +128,7 @@ fun ContactSearchBar(
                     .clickable {
                         if (text.isEmpty()) {
                             onSearch(text, false)
-                            hideKeyboard()
+                            com.example.core.hideKeyboard()
                             keyboard?.hide()
                             focusManager.clearFocus()
                             active = false
