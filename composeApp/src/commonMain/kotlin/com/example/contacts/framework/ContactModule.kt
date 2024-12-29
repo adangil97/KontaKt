@@ -17,6 +17,6 @@ val contactModule = module {
     single { SaveContact(get()) }
     single { SearchContacts(get()) }
     single { UpdateContact(get()) }
-    factory { ContactDetailViewModel(get(), get(), get(), get()) }
+    factory { ContactDetailViewModel(get(), get(), get(), get(), get(), get()) }
     factory { com.example.contacts.presentation.list.ContactListViewModel(get(), get()) }
 }

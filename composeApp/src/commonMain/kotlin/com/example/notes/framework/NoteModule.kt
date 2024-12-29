@@ -6,6 +6,7 @@ import com.example.notes.usecases.DeleteNoteByContactId
 import com.example.notes.usecases.DeleteNoteById
 import com.example.notes.usecases.DeleteNotesWithoutContact
 import com.example.notes.usecases.GetNotesByContactId
+import com.example.notes.usecases.GetNotesWithoutContact
 import com.example.notes.usecases.SaveNote
 import com.example.notes.usecases.UpdateNote
 import org.koin.dsl.module
@@ -16,6 +17,7 @@ val noteModule = module {
     single { DeleteNoteById(get()) }
     single { DeleteNotesWithoutContact(get()) }
     single { GetNotesByContactId(get()) }
+    single { GetNotesWithoutContact(get()) }
     single { SaveNote(get()) }
     single { UpdateNote(get()) }
     factory {

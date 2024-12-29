@@ -9,6 +9,9 @@ import com.example.contacts.usecases.GetContactById
 import com.example.contacts.usecases.SaveContact
 import com.example.contacts.usecases.UpdateContact
 import com.example.core.StateEffectScreenModel
+import com.example.notes.presentation.toNoteUiModel
+import com.example.notes.usecases.GetNotesByContactId
+import com.example.notes.usecases.GetNotesWithoutContact
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -16,7 +19,9 @@ class ContactDetailViewModel(
     private val saveContact: SaveContact,
     private val updateContact: UpdateContact,
     private val getContactById: GetContactById,
-    private val deleteContactById: DeleteContactById
+    private val deleteContactById: DeleteContactById,
+    private val getNotesByContactId: GetNotesByContactId,
+    private val getNotesWithoutContact: GetNotesWithoutContact
 ) : StateEffectScreenModel<ContactDetailUiState, ContactDetailUiEffects>(ContactDetailUiState()) {
 
     fun updatePhoto(photo: ByteArray?) {
@@ -78,6 +83,26 @@ class ContactDetailViewModel(
             deleteContactById(id)
             updateState(currentState().copy(isLoading = false))
             launchEffect(ContactDetailUiEffects.GoBack)
+        }
+    }
+
+    fun updateNotes(contactId: Long?) {
+        screenModelScope.launch {
+            val currentState = currentState()
+            val notes = if (contactId != null) {
+                getNotesByContactId(contactId)
+            } else {
+                getNotesWithoutContact()
+            }
+            updateState(
+                currentState.copy(
+                    contact = currentState.contact.copy(
+                        notes = notes.map { note ->
+                            note.toNoteUiModel()
+                        }
+                    )
+                )
+            )
         }
     }
 }

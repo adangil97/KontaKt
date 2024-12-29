@@ -10,6 +10,8 @@ interface NoteRepository {
 
     suspend fun getByContactId(contactId: Long): List<Note>
 
+    suspend fun getWithoutContactId(): List<Note>
+
     suspend fun deleteById(id: Long)
 
     suspend fun deleteByContactId(id: Long)

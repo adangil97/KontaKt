@@ -10,6 +10,9 @@ INSERT INTO Note(contactId, note) VALUES ?;
 updateContact:
 INSERT OR REPLACE INTO Note VALUES ?;
 
+findNotesWithoutContact:
+SELECT * FROM Note WHERE contactId ISNULL;
+
 findNotesByContactId:
 SELECT * FROM Note WHERE contactId = :contactId;
 

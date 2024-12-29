@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.koin.koinNavigatorScreenModel
+import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.example.core.CaptureImageScreen
@@ -31,6 +32,8 @@ import com.example.core.ds.ContactCircularProgressBar
 import com.example.core.ds.ContactSelectorBottomSheet
 import com.example.core.ds.ContactTopAppBar
 import com.example.core.findNavigatorByKey
+import com.example.notes.presentation.NoteActions
+import com.example.notes.presentation.NoteViewModel
 import com.preat.peekaboo.image.picker.ResizeOptions
 import com.preat.peekaboo.image.picker.SelectionMode
 import com.preat.peekaboo.image.picker.rememberImagePickerLauncher
@@ -49,6 +52,7 @@ class ContactDetailScreen(private val contactId: Long? = null) : ContactUniqueSc
         val navigatorKey = stringResource(Res.string.global_navigator_key)
         val navigator = contactDetailNavigation.findNavigatorByKey(navigatorKey)
         val viewModel: ContactDetailViewModel = contactDetailNavigation.koinNavigatorScreenModel()
+        val notesViewModel: NoteViewModel = koinScreenModel()
         val screenState by viewModel.state.collectAsState()
         val screenEffects by viewModel.effect.collectAsState(null)
         val scope = rememberCoroutineScope()
@@ -86,17 +90,38 @@ class ContactDetailScreen(private val contactId: Long? = null) : ContactUniqueSc
                     updateState = { newContact ->
                         viewModel.updateState(screenState.copy(contact = newContact))
                     },
-                    onUpdateContact = { contactId, contact ->
-                        viewModel.dispatchContact(contactId, contact)
-                    },
                     onRequestPhoto = {
                         showImageBottomSheet = true
                     },
-                    onDeleteContact = { contactId ->
-                        viewModel.deleteContact(contactId)
+                    onNoteActions = { noteActions ->
+                        when (noteActions) {
+                            is NoteActions.DeleteNote -> {
+                                notesViewModel.deleteNote(noteActions.id)
+                            }
+
+                            is NoteActions.SaveNote -> notesViewModel.dispatchNote(
+                                contactId = noteActions.contactId,
+                                note = noteActions.note
+                            )
+
+                            is NoteActions.UpdateNote -> notesViewModel.dispatchNote(
+                                id = noteActions.id,
+                                contactId = noteActions.contactId,
+                                note = noteActions.note
+                            )
+                        }
+                        viewModel.updateNotes(contactId)
                     }
-                ) { contact ->
-                    viewModel.dispatchContact(contact = contact)
+                ) { action ->
+                    when (action) {
+                        is ContactDetailActions.DeleteContact -> viewModel.deleteContact(action.id)
+                        is ContactDetailActions.SaveContact -> viewModel.dispatchContact(contact = action.contact)
+                        is ContactDetailActions.UpdateContact -> viewModel.dispatchContact(
+                            action.id,
+                            action.contact
+                        )
+                    }
+
                 }
                 if (screenState.isLoading) {
                     ContactCircularProgressBar()
@@ -143,6 +168,7 @@ class ContactDetailScreen(private val contactId: Long? = null) : ContactUniqueSc
             }
             LaunchedEffect(false) {
                 if (screenState.alreadyInitialized.not()) {
+                    notesViewModel.initialize()
                     viewModel.getContactIfRequired(contactId)
                 }
             }

@@ -29,6 +29,12 @@ class DBNoteRepository(
         }
     }
 
+    override suspend fun getWithoutContactId(): List<Note> = withContext(Dispatchers.IO) {
+        noteDao.findNotesWithoutContact().executeAsList().map { noteDB ->
+            noteDB.toNote()
+        }
+    }
+
     override suspend fun deleteById(id: Long) {
         withContext(Dispatchers.IO) {
             noteDao.deleteNoteById(id)
