@@ -14,6 +14,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.koin.getScreenModel
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
+import com.example.contacts.presentation.detail.ContactDetailScreen
 import com.example.core.ActionsScreen
 import com.example.core.ContactUniqueScreen
 import com.example.core.ds.ContactSearchBar
@@ -27,6 +30,7 @@ class ContactListScreen : ContactUniqueScreen() {
     override fun Content() {
         val viewModel: ContactListViewModel = getScreenModel()
         val screenState by viewModel.state.collectAsState()
+        val navigator = LocalNavigator.currentOrThrow
         Scaffold(
             modifier = Modifier.padding(top = 12.dp),
             topBar = {
@@ -43,16 +47,16 @@ class ContactListScreen : ContactUniqueScreen() {
                     )
                 }
             },
-        ) {
-            Box(modifier = Modifier.padding(it)) {
+        ) { paddingContent ->
+            Box(modifier = Modifier.padding(paddingContent)) {
                 if (screenState.isLoading) {
                     ContactListLoading()
                 } else {
                     ContactListContent(
                         contacts = screenState.contacts,
                         modifier = Modifier.fillMaxSize().padding(8.dp),
-                        onContactClick = {
-
+                        onContactClick = { contactId ->
+                            navigator.push(ContactDetailScreen(contactId))
                         }
                     )
                 }

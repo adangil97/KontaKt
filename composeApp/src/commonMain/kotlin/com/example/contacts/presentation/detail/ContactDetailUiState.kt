@@ -9,5 +9,7 @@ data class ContactDetailUiState(
 
 sealed class ContactDetailUiEffects {
 
-    data object Success : ContactDetailUiEffects()
+    data object GoBack : ContactDetailUiEffects()
+
+    data object ShowUpdateSuccess : ContactDetailUiEffects()
 }

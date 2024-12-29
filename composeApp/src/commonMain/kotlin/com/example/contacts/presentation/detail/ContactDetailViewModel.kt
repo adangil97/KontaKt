@@ -1,7 +1,7 @@
 package com.example.contacts.presentation.detail
 
 import cafe.adriel.voyager.core.model.screenModelScope
-import com.example.contacts.presentation.ContactUiRequestModel
+import com.example.contacts.presentation.ContactUiModel
 import com.example.contacts.presentation.toContactRequest
 import com.example.contacts.presentation.toContactUiModel
 import com.example.contacts.usecases.DeleteContactById
@@ -9,6 +9,7 @@ import com.example.contacts.usecases.GetContactById
 import com.example.contacts.usecases.SaveContact
 import com.example.contacts.usecases.UpdateContact
 import com.example.core.StateEffectScreenModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class ContactDetailViewModel(
@@ -18,12 +19,15 @@ class ContactDetailViewModel(
     private val deleteContactById: DeleteContactById
 ) : StateEffectScreenModel<ContactDetailUiState, ContactDetailUiEffects>(ContactDetailUiState()) {
 
-    fun fetchContactIfRequired(id: Long?) {
+    fun getContactIfRequired(id: Long?) {
         screenModelScope.launch {
             if (id != null) {
+                updateState(currentState().copy(isLoading = true))
+                delay(1000)
                 val contact = getContactById(id)?.toContactUiModel()
                 updateState(
                     currentState().copy(
+                        isLoading = false,
                         contact = contact
                     )
                 )
@@ -32,28 +36,30 @@ class ContactDetailViewModel(
     }
 
     fun dispatchContact(
-        id: Long?,
-        contact: ContactUiRequestModel
+        id: Long? = null,
+        contact: ContactUiModel
     ) {
         screenModelScope.launch {
             updateState(currentState().copy(isLoading = true))
             val contactRequest = contact.toContactRequest()
+            delay(1000)
             if (id != null) {
                 updateContact(id, contactRequest)
             } else {
                 saveContact(contactRequest)
             }
             updateState(currentState().copy(isLoading = false))
-            launchEffect(ContactDetailUiEffects.Success)
+            launchEffect(ContactDetailUiEffects.GoBack)
         }
     }
 
     fun deleteContact(id: Long) {
         screenModelScope.launch {
             updateState(currentState().copy(isLoading = true))
+            delay(1000)
             deleteContactById(id)
             updateState(currentState().copy(isLoading = false))
-            launchEffect(ContactDetailUiEffects.Success)
+            launchEffect(ContactDetailUiEffects.GoBack)
         }
     }
 }

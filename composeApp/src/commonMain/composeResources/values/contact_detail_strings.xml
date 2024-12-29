@@ -1,0 +1,11 @@
+<resources>
+    <string name="contact_detail_title">Contacto</string>
+    <string name="contact_detail_updated_success">Se actualizo el contacto con éxito</string>
+    <string name="contact_detail_name_is_empty">El nombre es requerido</string>
+    <string name="contact_detail_phone_error">El telefono debe ser a 10 digitos</string>
+    <string name="contact_detail_name">Nombre de contacto</string>
+    <string name="contact_detail_last_name">Apellido de contacto</string>
+    <string name="contact_detail_phone">Telefono de contacto</string>
+    <string name="contact_detail_email">Email de contacto</string>
+    <string name="contact_detail_notes">Notas del contacto</string>
+</resources>

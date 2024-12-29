@@ -1,4 +1,9 @@
 <resources>
     <string name="default_image_description">image</string>
     <string name="msg_retry">Reintentar</string>
+    <string name="msg_edit">Editar</string>
+    <string name="msg_save">Guardar</string>
+    <string name="msg_update">Actualizar</string>
+    <string name="msg_delete">Eliminar</string>
+    <string name="msg_loading">...</string>
 </resources>

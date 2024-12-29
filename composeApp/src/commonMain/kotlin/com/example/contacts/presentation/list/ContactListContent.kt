@@ -38,7 +38,9 @@ import com.example.core.ds.ContactSimpleContent
 import com.example.core.ds.ContactSpacer
 import com.example.core.ds.ContactText
 import kontakt.composeapp.generated.resources.Res
+import kontakt.composeapp.generated.resources.contact_list_email_not_found
 import kontakt.composeapp.generated.resources.contact_list_empty
+import kontakt.composeapp.generated.resources.contact_list_phone_number_not_found
 import kontakt.composeapp.generated.resources.create_new_contact
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.decodeToImageBitmap
@@ -127,19 +129,24 @@ fun ContactItem(
                 verticalArrangement = Arrangement.Center,
             ) {
                 ContactText(
-                    contactUiModel.name,
+                    "${contactUiModel.name} ${contactUiModel.lastName.orEmpty()}",
                     textAlign = TextAlign.Start,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(bottom = 8.dp)
                 )
-                ContactSpacer(4.dp)
                 ContactText(
-                    contactUiModel.email.orEmpty(),
+                    contactUiModel.phoneNumber
+                        ?: stringResource(Res.string.contact_list_phone_number_not_found),
                     textAlign = TextAlign.Start,
                     fontSize = 10.sp,
                     modifier = Modifier.padding(bottom = 8.dp)
                 )
-                ContactSpacer(4.dp)
+                ContactText(
+                    contactUiModel.email ?: stringResource(Res.string.contact_list_email_not_found),
+                    textAlign = TextAlign.Start,
+                    fontSize = 10.sp,
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
             }
             ContactIcon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowRight,

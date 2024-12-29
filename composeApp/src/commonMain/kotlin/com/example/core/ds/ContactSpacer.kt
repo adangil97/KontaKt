@@ -11,3 +11,13 @@ import androidx.compose.ui.unit.dp
 fun ContactSpacer(space: Dp = 0.dp) {
     Spacer(modifier = Modifier.padding(space))
 }
+
+@Composable
+fun ContactSpacer(
+    start: Dp = 0.dp,
+    top: Dp = 0.dp,
+    end: Dp = 0.dp,
+    bottom: Dp = 0.dp
+) {
+    Spacer(modifier = Modifier.padding(start, top, end, bottom))
+}

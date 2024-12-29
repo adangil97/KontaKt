@@ -67,3 +67,35 @@ fun ContactImage(
         modifier = modifier
     )
 }
+
+@Composable
+fun ContactImage(
+    imageVector: ImageVector,
+    contentDescription: String = stringResource(Res.string.default_image_description),
+    contentScale: ContentScale = ContentScale.Crop,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    editableContent: @Composable (() -> Unit)? = null
+) {
+    Box(
+        modifier = modifier
+            .clip(CircleShape)
+            .border(2.dp, Color.Gray, CircleShape)
+            .clickable(onClick = onClick)
+    ) {
+        Image(
+            imageVector = imageVector,
+            contentDescription = contentDescription,
+            contentScale = contentScale,
+            modifier = modifier
+        )
+        editableContent?.let {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.BottomCenter
+            ) {
+                it()
+            }
+        }
+    }
+}

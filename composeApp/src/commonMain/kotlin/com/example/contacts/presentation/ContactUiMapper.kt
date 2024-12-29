@@ -13,7 +13,7 @@ fun ContactResponse.toContactUiModel() = ContactUiModel(
     notes = notes
 )
 
-fun ContactUiRequestModel.toContactRequest() = ContactRequest(
+fun ContactUiModel.toContactRequest() = ContactRequest(
     name = name,
     lastName = lastName,
     phoneNumber = phoneNumber,
