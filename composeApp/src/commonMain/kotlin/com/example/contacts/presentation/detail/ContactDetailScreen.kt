@@ -22,28 +22,33 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import cafe.adriel.voyager.koin.getScreenModel
+import cafe.adriel.voyager.koin.getNavigatorScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.example.core.CaptureImageScreen
+import com.example.core.ContactUniqueScreen
 import com.example.core.ds.ContactCircularProgressBar
 import com.example.core.ds.ContactSelectorBottomSheet
 import com.example.core.ds.ContactTopAppBar
+import com.example.core.findNavigatorByKey
 import com.preat.peekaboo.image.picker.ResizeOptions
 import com.preat.peekaboo.image.picker.SelectionMode
 import com.preat.peekaboo.image.picker.rememberImagePickerLauncher
 import kontakt.composeapp.generated.resources.Res
 import kontakt.composeapp.generated.resources.contact_detail_title
 import kontakt.composeapp.generated.resources.contact_detail_updated_success
+import kontakt.composeapp.generated.resources.global_navigator_key
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 
-class ContactDetailScreen(private val contactId: Long? = null) :
-    com.example.core.ContactUniqueScreen() {
+class ContactDetailScreen(private val contactId: Long? = null) : ContactUniqueScreen() {
 
     @Composable
     override fun Content() {
-        val viewModel: ContactDetailViewModel = getScreenModel()
+        val contactDetailNavigation = LocalNavigator.currentOrThrow
+        val navigatorKey = stringResource(Res.string.global_navigator_key)
+        val navigator = contactDetailNavigation.findNavigatorByKey(navigatorKey)
+        val viewModel: ContactDetailViewModel = contactDetailNavigation.getNavigatorScreenModel()
         val screenState by viewModel.state.collectAsState()
         val screenEffects by viewModel.effect.collectAsState(null)
         val scope = rememberCoroutineScope()
@@ -56,16 +61,9 @@ class ContactDetailScreen(private val contactId: Long? = null) :
             ),
             onResult = { byteArrays ->
                 val image = byteArrays.firstOrNull()
-                viewModel.updateState(
-                    screenState.copy(
-                        contact = screenState.contact.copy(
-                            photo = image
-                        )
-                    )
-                )
+                viewModel.updatePhoto(image)
             }
         )
-        val navigator = LocalNavigator.currentOrThrow
         Scaffold(
             modifier = Modifier.fillMaxSize(),
             topBar = {
@@ -73,7 +71,7 @@ class ContactDetailScreen(private val contactId: Long? = null) :
                     ContactTopAppBar(
                         title = stringResource(Res.string.contact_detail_title),
                         onBackClick = {
-                            navigator.pop()
+                            navigator?.pop()
                         }
                     )
                 }
@@ -82,27 +80,26 @@ class ContactDetailScreen(private val contactId: Long? = null) :
             val snackBarHostState = remember { SnackbarHostState() }
             var showImageBottomSheet by remember { mutableStateOf(false) }
             Box(modifier = Modifier.padding(paddingContent)) {
+                ContactDetailContent(
+                    contactUiModel = screenState.contact,
+                    isLoading = screenState.isLoading,
+                    updateState = { newContact ->
+                        viewModel.updateState(screenState.copy(contact = newContact))
+                    },
+                    onUpdateContact = { contactId, contact ->
+                        viewModel.dispatchContact(contactId, contact)
+                    },
+                    onRequestPhoto = {
+                        showImageBottomSheet = true
+                    },
+                    onDeleteContact = { contactId ->
+                        viewModel.deleteContact(contactId)
+                    }
+                ) { contact ->
+                    viewModel.dispatchContact(contact = contact)
+                }
                 if (screenState.isLoading) {
                     ContactCircularProgressBar()
-                } else {
-                    ContactDetailContent(
-                        contactUiModel = screenState.contact,
-                        isLoading = screenState.isLoading,
-                        updateState = { newContact ->
-                            viewModel.updateState(screenState.copy(contact = newContact))
-                        },
-                        onUpdateContact = { contactId, contact ->
-                            viewModel.dispatchContact(contactId, contact)
-                        },
-                        onRequestPhoto = {
-                            showImageBottomSheet = true
-                        },
-                        onDeleteContact = { contactId ->
-                            viewModel.deleteContact(contactId)
-                        }
-                    ) { contact ->
-                        viewModel.dispatchContact(contact = contact)
-                    }
                 }
                 if (showImageBottomSheet) {
                     ContactSelectorBottomSheet(
@@ -111,7 +108,7 @@ class ContactDetailScreen(private val contactId: Long? = null) :
                             singleImagePicker.launch()
                         },
                         onCameraSelection = {
-                            navigator.push(CaptureImageScreen())
+                            contactDetailNavigation.push(CaptureImageScreen())
                         }
                     ) {
                         showImageBottomSheet = false
@@ -131,7 +128,7 @@ class ContactDetailScreen(private val contactId: Long? = null) :
             screenEffects?.let { effect ->
                 when (effect) {
                     ContactDetailUiEffects.GoBack -> LaunchedEffect(false) {
-                        navigator.pop()
+                        navigator?.pop()
                     }
 
                     ContactDetailUiEffects.ShowUpdateSuccess -> LaunchedEffect(false) {
@@ -145,7 +142,9 @@ class ContactDetailScreen(private val contactId: Long? = null) :
                 }
             }
             LaunchedEffect(false) {
-                viewModel.getContactIfRequired(contactId)
+                if (screenState.alreadyInitialized.not()) {
+                    viewModel.getContactIfRequired(contactId)
+                }
             }
         }
     }

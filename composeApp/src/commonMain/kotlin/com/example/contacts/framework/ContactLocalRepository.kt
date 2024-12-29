@@ -45,8 +45,8 @@ class ContactLocalRepository(private val contactDatabase: ContactDatabase) : Con
     ) {
         withContext(Dispatchers.IO) {
             getById(id)?.let {
-                val newContact = contact.toContactDB().copy(id = it.id)
-                contactDao.saveContact(newContact)
+                val newContact = contact.toContactDB(it.id)
+                contactDao.updateContact(newContact)
             }
         }
     }

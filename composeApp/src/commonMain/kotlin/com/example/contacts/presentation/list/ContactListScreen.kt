@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.koin.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import com.example.contacts.presentation.detail.ContactDetailScreen
+import com.example.contacts.presentation.detail.ContactDetailNavigationScreen
 import com.example.core.ActionsScreen
 import com.example.core.ContactUniqueScreen
 import com.example.core.ds.ContactSearchBar
@@ -57,7 +57,7 @@ class ContactListScreen : ContactUniqueScreen() {
                         contacts = screenState.contacts,
                         modifier = Modifier.fillMaxSize().padding(8.dp),
                         onContactClick = { contactId ->
-                            navigator.push(ContactDetailScreen(contactId))
+                            navigator.push(ContactDetailNavigationScreen(contactId))
                         }
                     )
                 }

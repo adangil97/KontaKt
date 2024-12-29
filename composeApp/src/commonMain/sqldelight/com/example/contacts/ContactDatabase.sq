@@ -9,7 +9,10 @@ CREATE TABLE Contact (
 );
 
 saveContact:
-INSERT OR REPLACE INTO Contact(name, lastName, phoneNumber, email, photo, notes) VALUES ?;
+INSERT INTO Contact(name, lastName, phoneNumber, email, photo, notes) VALUES ?;
+
+updateContact:
+INSERT OR REPLACE INTO Contact VALUES ?;
 
 getAllContacts:
 SELECT * FROM Contact;

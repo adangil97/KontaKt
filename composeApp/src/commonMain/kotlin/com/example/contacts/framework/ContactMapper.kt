@@ -14,8 +14,8 @@ fun ContactDB.toContactResponse() = ContactResponse(
     notes = notes?.split(",")
 )
 
-fun ContactRequest.toContactDB() = ContactDB(
-    id = 0,
+fun ContactRequest.toContactDB(id: Long = 0) = ContactDB(
+    id = id,
     name = name,
     lastName = lastName,
     phoneNumber = phoneNumber,

@@ -9,5 +9,6 @@
     <string name="select_image">Seleccionar imagen:</string>
     <string name="select_from_gallery">Galeria</string>
     <string name="select_from_camera">Camara</string>
-    <string name="camera_permission_is_denied">El permiso de la camara ha sido denegado</string>
+    <string name="camera_permission_is_denied">El permiso de la camara es necesario</string>
+    <string name="global_navigator_key">global_navigator</string>
 </resources>

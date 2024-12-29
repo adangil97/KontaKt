@@ -19,6 +19,17 @@ class ContactDetailViewModel(
     private val deleteContactById: DeleteContactById
 ) : StateEffectScreenModel<ContactDetailUiState, ContactDetailUiEffects>(ContactDetailUiState()) {
 
+    fun updatePhoto(photo: ByteArray?) {
+        val currentContact = currentState().contact
+        updateState(
+            currentState().copy(
+                contact = currentContact.copy(
+                    photo = photo
+                )
+            )
+        )
+    }
+
     fun getContactIfRequired(id: Long?) {
         screenModelScope.launch {
             if (id != null) {
@@ -33,6 +44,12 @@ class ContactDetailViewModel(
                     )
                 }
             }
+            updateState(
+                currentState().copy(
+                    isLoading = false,
+                    alreadyInitialized = true
+                )
+            )
         }
     }
 

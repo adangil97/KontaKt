@@ -14,6 +14,7 @@ sqlDelight = "2.0.2"
 koin = "3.5.3"
 voyager = "1.0.0"
 peekaboo = "0.5.2"
+permissionVersion = "0.34.0"
 
 [libraries]
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbineVersion" }
@@ -34,6 +35,7 @@ voyager-screenmodel = { module = "cafe.adriel.voyager:voyager-screenmodel", vers
 voyager-transitions = { module = "cafe.adriel.voyager:voyager-transitions", version.ref = "voyager" }
 peekaboo-ui = { module = "io.github.onseok:peekaboo-ui", version.ref = "peekaboo" }
 peekaboo-image-picker = { module = "io.github.onseok:peekaboo-image-picker", version.ref = "peekaboo" }
+permission = { module = "com.google.accompanist:accompanist-permissions", version.ref = "permissionVersion" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

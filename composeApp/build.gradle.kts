@@ -38,6 +38,7 @@ kotlin {
             implementation(libs.androidx.activity.compose)
             implementation(libs.sqlDelight.driver.android)
             implementation(libs.koin.android)
+            implementation(libs.permission)
         }
         iosMain.dependencies {
             implementation(libs.sqlDelight.driver.native)
