@@ -1,6 +1,6 @@
 CREATE TABLE Note(
     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-    contactId INTEGER NOT NULL,
+    contactId INTEGER,
     note TEXT NOT NULL
 );
 
@@ -18,3 +18,9 @@ SELECT * FROM Note WHERE id = :id;
 
 deleteNoteById:
 DELETE FROM Note WHERE id = :id;
+
+deleteNoteByContactId:
+DELETE FROM Note WHERE contactId = :contactId;
+
+deleteNotesWithContactIdNull:
+DELETE FROM Note WHERE contactId ISNULL;

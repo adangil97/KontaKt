@@ -1,6 +1,6 @@
 package com.example.contacts.presentation
 
-import cafe.adriel.voyager.core.lifecycle.JavaSerializable
+import com.example.notes.presentation.NoteUiModel
 
 data class ContactUiModel(
     val id: Long = 0,
@@ -9,8 +9,9 @@ data class ContactUiModel(
     val phoneNumber: String? = null,
     val email: String? = null,
     val photo: ByteArray? = null,
-    val notes: List<String>? = null
-) : JavaSerializable {
+    val notes: List<NoteUiModel>? = null
+) {
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other == null || this::class != other::class) return false

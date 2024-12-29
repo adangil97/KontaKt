@@ -10,8 +10,7 @@ fun ContactDB.toContactResponse() = ContactResponse(
     lastName = lastName,
     phoneNumber = phoneNumber,
     email = email,
-    photo = photo?.toList(),
-    notes = notes?.split(",")
+    photo = photo?.toList()
 )
 
 fun ContactRequest.toContactDB(id: Long = 0) = ContactDB(
@@ -20,6 +19,5 @@ fun ContactRequest.toContactDB(id: Long = 0) = ContactDB(
     lastName = lastName,
     phoneNumber = phoneNumber,
     email = email,
-    photo = photo?.toByteArray(),
-    notes = notes?.joinToString(",")
+    photo = photo?.toByteArray()
 )

@@ -12,7 +12,7 @@ import org.koin.dsl.module
 val contactModule = module {
     single<ContactRepository> { DBContactRepository(get()) }
     single { DeleteContactById(get()) }
-    single { GetContactById(get()) }
+    single { GetContactById(get(), get()) }
     single { com.example.contacts.usecases.GetContacts(get()) }
     single { SaveContact(get()) }
     single { SearchContacts(get()) }

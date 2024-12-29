@@ -4,12 +4,11 @@ CREATE TABLE Contact (
     lastName TEXT,
     phoneNumber TEXT,
     email TEXT,
-    photo BLOB,
-    notes TEXT
+    photo BLOB
 );
 
 saveContact:
-INSERT INTO Contact(name, lastName, phoneNumber, email, photo, notes) VALUES ?;
+INSERT INTO Contact(name, lastName, phoneNumber, email, photo) VALUES ?;
 
 updateContact:
 INSERT OR REPLACE INTO Contact VALUES ?;
@@ -20,8 +19,7 @@ SELECT * FROM Contact;
 searchContacts:
 SELECT * FROM Contact
     WHERE name LIKE ('%' || :query || '%') OR
-        lastName LIKE ('%' || :query || '%') OR
-        notes LIKE ('%' || :query || '%');
+        lastName LIKE ('%' || :query || '%');
 
 getContactById:
 SELECT * FROM Contact WHERE id = :id;

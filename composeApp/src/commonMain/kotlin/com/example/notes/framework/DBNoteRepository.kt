@@ -34,4 +34,16 @@ class DBNoteRepository(
             noteDao.deleteNoteById(id)
         }
     }
+
+    override suspend fun deleteByContactId(id: Long) {
+        withContext(Dispatchers.IO) {
+            noteDao.deleteNoteByContactId(id)
+        }
+    }
+
+    override suspend fun deleteNotesWithContactIdNull() {
+        withContext(Dispatchers.IO) {
+            noteDao.deleteNotesWithContactIdNull()
+        }
+    }
 }

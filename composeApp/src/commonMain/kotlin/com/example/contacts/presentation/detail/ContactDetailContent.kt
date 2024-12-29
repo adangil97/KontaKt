@@ -144,7 +144,7 @@ fun ContactDetailContent(
                 ContactSpacer(bottom = 24.dp)
             }
             items(contactUiModel.notes.orEmpty()) {
-                Text(it)
+                Text(it.note)
             }
         }
         Column(modifier = Modifier.align(Alignment.BottomCenter)) {
