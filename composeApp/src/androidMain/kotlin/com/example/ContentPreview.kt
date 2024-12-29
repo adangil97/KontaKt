@@ -10,7 +10,12 @@ import com.example.contacts.presentation.detail.ContactDetailContent
 @Composable
 fun ContentPreview(modifier: Modifier = Modifier) {
     ContactDetailContent(
-        contactUiModel = ContactUiModel(),
+        contactUiModel = ContactUiModel(
+            notes = listOf(
+                "Nota 1",
+                "Nota 2"
+            )
+        ),
         isLoading = false,
         updateState = {},
         onRequestPhoto = {

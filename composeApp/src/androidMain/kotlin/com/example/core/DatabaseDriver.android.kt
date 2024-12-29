@@ -1,14 +1,17 @@
 package com.example.core
 
-import app.cash.sqldelight.async.coroutines.synchronous
+import app.cash.sqldelight.db.QueryResult
 import app.cash.sqldelight.db.SqlDriver
+import app.cash.sqldelight.db.SqlSchema
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
-import com.example.contacts.ContactDatabase
 
-actual fun createDriver(): SqlDriver {
+actual fun createDriver(
+    databaseName: String,
+    schema: SqlSchema<QueryResult.Value<Unit>>
+): SqlDriver {
     return AndroidSqliteDriver(
-        ContactDatabase.Schema.synchronous(),
+        schema,
         ContextHelper().context(),
-        "contact.db"
+        databaseName
     )
 }

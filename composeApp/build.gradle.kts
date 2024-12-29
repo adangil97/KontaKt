@@ -114,7 +114,7 @@ dependencies {
 
 sqldelight {
     databases {
-        create("ContactDatabase") {
+        create("AppDatabase") {
             packageName.set("com.example.contacts")
             generateAsync = true
         }

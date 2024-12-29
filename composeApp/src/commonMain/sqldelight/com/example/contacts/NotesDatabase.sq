@@ -1,0 +1,17 @@
+CREATE TABLE Note(
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    contactId INTEGER NOT NULL,
+    note TEXT NOT NULL
+);
+
+saveNote:
+INSERT INTO Note(contactId, note) VALUES ?;
+
+updateContact:
+INSERT OR REPLACE INTO Note VALUES ?;
+
+findNotesByContactId:
+SELECT * FROM Note WHERE contactId = :contactId;
+
+deleteNoteById:
+DELETE FROM Note WHERE id = :id;

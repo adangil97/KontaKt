@@ -13,7 +13,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import cafe.adriel.voyager.koin.getScreenModel
+import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.example.contacts.presentation.detail.ContactDetailNavigationScreen
@@ -29,7 +29,7 @@ class ContactListScreen : ContactUniqueScreen() {
     @Composable
     override fun Content() {
 
-        val viewModel: ContactListViewModel = getScreenModel()
+        val viewModel: ContactListViewModel = koinScreenModel()
         val screenState by viewModel.state.collectAsState()
         val navigator = LocalNavigator.currentOrThrow
         Scaffold(

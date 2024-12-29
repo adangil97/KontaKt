@@ -1,10 +1,16 @@
 package com.example.core
 
-import app.cash.sqldelight.async.coroutines.synchronous
+import app.cash.sqldelight.db.QueryResult
 import app.cash.sqldelight.db.SqlDriver
+import app.cash.sqldelight.db.SqlSchema
 import app.cash.sqldelight.driver.native.NativeSqliteDriver
-import com.example.contacts.ContactDatabase
 
-actual fun createDriver(): SqlDriver {
-    return NativeSqliteDriver(ContactDatabase.Schema.synchronous(), "contact.db")
+actual fun createDriver(
+    databaseName: String,
+    schema: SqlSchema<QueryResult.Value<Unit>>
+): SqlDriver {
+    return NativeSqliteDriver(
+        schema,
+        databaseName
+    )
 }

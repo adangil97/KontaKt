@@ -8,9 +8,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ImageSearch
 import androidx.compose.runtime.Composable
@@ -66,16 +67,26 @@ fun ContactDetailContent(
             hideKeyboard()
         }
     ) {
-        Column(
+        LazyColumn(
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState())
+            modifier = Modifier.fillMaxSize()
         ) {
-            var nameError: String? by remember { mutableStateOf(null) }
-            var phoneError: String? by remember { mutableStateOf(null) }
-            val msgEdit = stringResource(Res.string.msg_edit)
-            contactUiModel.photo?.let { photo ->
-                ContactImage(
-                    imageBitmap = photo.decodeToImageBitmap(),
+            item {
+                var nameError: String? by remember { mutableStateOf(null) }
+                var phoneError: String? by remember { mutableStateOf(null) }
+                val msgEdit = stringResource(Res.string.msg_edit)
+                contactUiModel.photo?.let { photo ->
+                    ContactImage(
+                        imageBitmap = photo.decodeToImageBitmap(),
+                        modifier = Modifier
+                            .padding(12.dp)
+                            .size(100.dp),
+                        onClick = onRequestPhoto
+                    ) {
+                        ContactEditableTag(msgEdit)
+                    }
+                } ?: ContactImage(
+                    imageVector = Icons.Filled.ImageSearch,
                     modifier = Modifier
                         .padding(12.dp)
                         .size(100.dp),
@@ -83,63 +94,58 @@ fun ContactDetailContent(
                 ) {
                     ContactEditableTag(msgEdit)
                 }
-            } ?: ContactImage(
-                imageVector = Icons.Filled.ImageSearch,
-                modifier = Modifier
-                    .padding(12.dp)
-                    .size(100.dp),
-                onClick = onRequestPhoto
-            ) {
-                ContactEditableTag(msgEdit)
-            }
-            ContactSpacer(12.dp)
-            ContactTopShadow()
-            ContactSpacer(12.dp)
-            Column(modifier = Modifier.fillMaxWidth(.8f)) {
-                val contactNameIsEmpty = stringResource(Res.string.contact_detail_name_is_empty)
-                ContactTextField(
-                    contactUiModel.name,
-                    onValueChange = {
-                        updateState(contactUiModel.copy(name = it))
-                        nameError = if (it.isBlank()) contactNameIsEmpty else null
-                    },
-                    msgError = nameError,
-                    labelValue = stringResource(Res.string.contact_detail_name)
-                )
-                ContactSpacer(8.dp)
-                ContactTextField(
-                    contactUiModel.lastName.orEmpty(),
-                    onValueChange = {
-                        updateState(contactUiModel.copy(lastName = it))
-                    },
-                    labelValue = stringResource(Res.string.contact_detail_last_name)
-                )
-                ContactSpacer(8.dp)
-                val phoneSizeError = stringResource(Res.string.contact_detail_phone_error)
-                ContactTextField(
-                    contactUiModel.phoneNumber.orEmpty(),
-                    onValueChange = { value ->
-                        val phoneNumber = value.filter { it.isDigit() }
-                        updateState(contactUiModel.copy(phoneNumber = phoneNumber))
-                        phoneError = if (phoneNumber.length != 10) phoneSizeError else null
-                    },
-                    msgError = phoneError,
-                    labelValue = stringResource(Res.string.contact_detail_phone),
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Number
-                    )
-                )
-                ContactSpacer(8.dp)
-                ContactTextField(
-                    contactUiModel.email.orEmpty(),
-                    onValueChange = {
-                        updateState(contactUiModel.copy(email = it))
-                    },
-                    labelValue = stringResource(Res.string.contact_detail_email)
-                )
                 ContactSpacer(12.dp)
+                ContactTopShadow()
+                ContactSpacer(12.dp)
+                Column(modifier = Modifier.fillMaxWidth(.8f)) {
+                    val contactNameIsEmpty = stringResource(Res.string.contact_detail_name_is_empty)
+                    ContactTextField(
+                        contactUiModel.name,
+                        onValueChange = {
+                            updateState(contactUiModel.copy(name = it))
+                            nameError = if (it.isBlank()) contactNameIsEmpty else null
+                        },
+                        msgError = nameError,
+                        labelValue = stringResource(Res.string.contact_detail_name)
+                    )
+                    ContactSpacer(8.dp)
+                    ContactTextField(
+                        contactUiModel.lastName.orEmpty(),
+                        onValueChange = {
+                            updateState(contactUiModel.copy(lastName = it))
+                        },
+                        labelValue = stringResource(Res.string.contact_detail_last_name)
+                    )
+                    ContactSpacer(8.dp)
+                    val phoneSizeError = stringResource(Res.string.contact_detail_phone_error)
+                    ContactTextField(
+                        contactUiModel.phoneNumber.orEmpty(),
+                        onValueChange = { value ->
+                            val phoneNumber = value.filter { it.isDigit() }
+                            updateState(contactUiModel.copy(phoneNumber = phoneNumber))
+                            phoneError = if (phoneNumber.length != 10) phoneSizeError else null
+                        },
+                        msgError = phoneError,
+                        labelValue = stringResource(Res.string.contact_detail_phone),
+                        keyboardOptions = KeyboardOptions(
+                            keyboardType = KeyboardType.Number
+                        )
+                    )
+                    ContactSpacer(8.dp)
+                    ContactTextField(
+                        contactUiModel.email.orEmpty(),
+                        onValueChange = {
+                            updateState(contactUiModel.copy(email = it))
+                        },
+                        labelValue = stringResource(Res.string.contact_detail_email)
+                    )
+                    ContactSpacer(12.dp)
+                }
+                ContactSpacer(bottom = 24.dp)
             }
-            ContactSpacer(bottom = 24.dp)
+            items(contactUiModel.notes.orEmpty()) {
+                Text(it)
+            }
         }
         Column(modifier = Modifier.align(Alignment.BottomCenter)) {
             if (contactUiModel.id == 0L) {

@@ -1,7 +1,7 @@
 package com.example.contacts.framework
 
 import app.cash.sqldelight.coroutines.asFlow
-import com.example.contacts.ContactDatabase
+import com.example.contacts.ContactDatabaseQueries
 import com.example.contacts.data.ContactRepository
 import com.example.contacts.domain.ContactRequest
 import com.example.contacts.domain.ContactResponse
@@ -11,11 +11,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
-class ContactLocalRepository(private val contactDatabase: ContactDatabase) : ContactRepository {
-
-    private val contactDao by lazy {
-        contactDatabase.contactDatabaseQueries
-    }
+class DBContactRepository(
+    private val contactDao: ContactDatabaseQueries
+) : ContactRepository {
 
     override fun getAll(): Flow<List<ContactResponse>> {
         return contactDao.getAllContacts().asFlow().map { query ->
