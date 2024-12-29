@@ -4,7 +4,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import cafe.adriel.voyager.koin.getNavigatorScreenModel
+import cafe.adriel.voyager.koin.koinNavigatorScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.example.contacts.presentation.detail.ContactDetailViewModel
@@ -18,7 +18,7 @@ class CaptureImageScreen : ContactUniqueScreen() {
     @Composable
     override fun Content() {
         val contactDetailNavigation = LocalNavigator.currentOrThrow
-        val viewModel: ContactDetailViewModel = contactDetailNavigation.getNavigatorScreenModel()
+        val viewModel: ContactDetailViewModel = contactDetailNavigation.koinNavigatorScreenModel()
         PermissionContent(
             deniedContent = {
                 PermissionDenied(modifier = Modifier.fillMaxSize())

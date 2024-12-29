@@ -22,7 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import cafe.adriel.voyager.koin.getNavigatorScreenModel
+import cafe.adriel.voyager.koin.koinNavigatorScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.example.core.CaptureImageScreen
@@ -48,7 +48,7 @@ class ContactDetailScreen(private val contactId: Long? = null) : ContactUniqueSc
         val contactDetailNavigation = LocalNavigator.currentOrThrow
         val navigatorKey = stringResource(Res.string.global_navigator_key)
         val navigator = contactDetailNavigation.findNavigatorByKey(navigatorKey)
-        val viewModel: ContactDetailViewModel = contactDetailNavigation.getNavigatorScreenModel()
+        val viewModel: ContactDetailViewModel = contactDetailNavigation.koinNavigatorScreenModel()
         val screenState by viewModel.state.collectAsState()
         val screenEffects by viewModel.effect.collectAsState(null)
         val scope = rememberCoroutineScope()
