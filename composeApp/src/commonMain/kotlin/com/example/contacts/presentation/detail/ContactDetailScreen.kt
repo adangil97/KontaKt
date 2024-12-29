@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.koin.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import com.example.core.CaptureImageScreen
 import com.example.core.ds.ContactCircularProgressBar
 import com.example.core.ds.ContactSelectorBottomSheet
 import com.example.core.ds.ContactTopAppBar
@@ -37,7 +38,8 @@ import kontakt.composeapp.generated.resources.contact_detail_updated_success
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 
-class ContactDetailScreen(private val contactId: Long? = null) : com.example.core.ContactUniqueScreen() {
+class ContactDetailScreen(private val contactId: Long? = null) :
+    com.example.core.ContactUniqueScreen() {
 
     @Composable
     override fun Content() {
@@ -109,7 +111,7 @@ class ContactDetailScreen(private val contactId: Long? = null) : com.example.cor
                             singleImagePicker.launch()
                         },
                         onCameraSelection = {
-
+                            navigator.push(CaptureImageScreen())
                         }
                     ) {
                         showImageBottomSheet = false
