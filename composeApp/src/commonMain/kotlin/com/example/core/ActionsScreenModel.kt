@@ -28,7 +28,6 @@ abstract class ActionsScreenModel<State>(
                 onSuccess(it)
             }
         }
-        sendAction(ActionsScreen())
     }
 
     fun sendAction(action: ActionsScreen) {
