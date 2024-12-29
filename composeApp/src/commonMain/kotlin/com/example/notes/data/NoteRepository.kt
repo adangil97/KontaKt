@@ -8,7 +8,7 @@ interface NoteRepository {
     
     suspend fun update(id: Long, note: Note)
 
-    fun getByContactId(contactId: Long): List<Note>
+    suspend fun getByContactId(contactId: Long): List<Note>
 
     suspend fun deleteById(id: Long)
 }

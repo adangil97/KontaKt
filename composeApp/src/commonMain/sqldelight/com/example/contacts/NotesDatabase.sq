@@ -13,5 +13,8 @@ INSERT OR REPLACE INTO Note VALUES ?;
 findNotesByContactId:
 SELECT * FROM Note WHERE contactId = :contactId;
 
+findNoteById:
+SELECT * FROM Note WHERE id = :id;
+
 deleteNoteById:
 DELETE FROM Note WHERE id = :id;
