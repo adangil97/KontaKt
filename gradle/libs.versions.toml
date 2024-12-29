@@ -12,7 +12,7 @@ mockkmpVersion = "2.0.0"
 turbineVersion = "1.0.0"
 sqlDelight = "2.0.2"
 koin = "3.5.3"
-voyager = "1.0.0"
+voyager = "1.1.0-beta02"
 peekaboo = "0.5.2"
 permissionVersion = "0.34.0"
 
