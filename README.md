@@ -77,4 +77,55 @@
   </li>
 <ol>
 <p>
-  
+
+<h2>Librerías Utilizadas</h2>
+<p>Este proyecto utiliza las siguientes librerías principales, cada una seleccionada por sus características específicas y beneficios para el desarrollo multiplataforma:</p>
+
+<div>
+    <h2>SQLDelight</h2>
+    <div>
+        <p>Seleccionada por su estabilidad y excelente soporte multiplataforma. Esta librería provee:</p>
+        <ul>
+            <li>Generación de código tipo-seguro para SQL</li>
+            <li>Soporte nativo para múltiples plataformas</li>
+            <li>Rendimiento optimizado</li>
+        </ul>
+    </div>
+</div>
+
+<div>
+    <h2>Koin</h2>
+    <div>
+        <p>Elegida por su amplia compatibilidad con Kotlin y facilidad para la inyección de dependencias. Ofrece:</p>
+        <ul>
+            <li>Sintaxis pragmática y kotlin-friendly</li>
+            <li>Configuración sencilla y rápida</li>
+            <li>Excelente integración con otras librerías de Kotlin</li>
+        </ul>
+    </div>
+</div>
+
+<div>
+    <h2>Voyager</h2>
+    <div>
+        <p>Implementada por su excelente soporte y mantenimiento activo. Destacan:</p>
+        <ul>
+            <li>Soporte robusto para navegación en Compose Multiplatform</li>
+            <li>Actualizaciones frecuentes con nuevas integraciones</li>
+            <li>Buena atención a issues y mantenimiento activo del proyecto</li>
+            <li>Arquitectura bien definida para implementaciones multiplataforma</li>
+        </ul>
+    </div>
+</div>
+
+<div>
+    <h2>Peekaboo</h2>
+    <div>
+        <p>Integrada por su funcionalidad única en el ecosistema multiplataforma. A pesar de tener un soporte limitado, ofrece:</p>
+        <ul>
+            <li>Acceso unificado a cámara y galería en Android e iOS</li>
+            <li>Simplificación significativa en la implementación de funciones multimedia</li>
+            <li>Solución práctica para aplicaciones que requieren capacidades multimedia multiplataforma</li>
+        </ul>
+    </div>
+</div>
