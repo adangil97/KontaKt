@@ -164,7 +164,7 @@ fun ContactDetailContent(
                 if (contactUiModel.id != 0L) {
                     ContactSpacer(bottom = 120.dp)
                 } else {
-                    ContactSpacer(bottom = 24.dp)
+                    ContactSpacer(bottom = 54.dp)
                 }
             }
         }

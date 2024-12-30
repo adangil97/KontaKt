@@ -146,7 +146,7 @@ class ContactDetailScreen(private val contactId: Long? = null) : ContactUniqueSc
                         noteUiModel = note,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .fillMaxHeight(.45f)
+                            .fillMaxHeight(.7f)
                             .align(Alignment.BottomCenter),
                         onNote = {
                             notesViewModel.dispatchNote(
