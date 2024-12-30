@@ -88,6 +88,7 @@ class ContactDetailViewModel(
 
     fun updateNotes(contactId: Long?) {
         screenModelScope.launch {
+            delay(100)
             val currentState = currentState()
             val notes = if (contactId != null) {
                 getNotesByContactId(contactId)

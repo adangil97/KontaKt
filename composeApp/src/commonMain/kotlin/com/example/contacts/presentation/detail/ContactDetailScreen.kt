@@ -64,7 +64,8 @@ class ContactDetailScreen(private val contactId: Long? = null) : ContactUniqueSc
             scope = scope,
             resizeOptions = ResizeOptions(
                 width = 250,
-                height = 250
+                height = 250,
+                compressionQuality = .5
             ),
             onResult = { byteArrays ->
                 val image = byteArrays.firstOrNull()
