@@ -1,6 +1,6 @@
 # KontaKt
 
-| [Android] https://github.com/user-attachments/assets/2755b414-3405-44aa-a178-9eea91f077c7 | [iOS] https://github.com/user-attachments/assets/b16a9072-f769-4054-b26d-cc5a66708326 |
+| [Android](https://github.com/user-attachments/assets/2755b414-3405-44aa-a178-9eea91f077c7) | [iOS](https://github.com/user-attachments/assets/b16a9072-f769-4054-b26d-cc5a66708326) |
 |----------|----------|
 
 <H1>MVVM Clean Architecture</H1>
