@@ -75,7 +75,7 @@
       <li><p>Module: Inyección de dependencias del repositorie de Data, y los DataSources a utilizar</p></li>
     </ul>
   </li>
-<ol>
+</ol>
 
 <h2>Librerías Utilizadas</h2>
 <p>Este proyecto utiliza las siguientes librerías principales, cada una seleccionada por sus características específicas y beneficios para el desarrollo multiplataforma:</p>
