@@ -1,14 +1,52 @@
-This is a Kotlin Multiplatform project targeting Android, iOS.
+# KontaKt
 
-* `/composeApp` is for code that will be shared across your Compose Multiplatform applications.
-  It contains several subfolders:
-  - `commonMain` is for code that’s common for all targets.
-  - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
-    For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-    `iosMain` would be the right folder for such calls.
+https://github.com/user-attachments/assets/b16a9072-f769-4054-b26d-cc5a66708326
 
-* `/iosApp` contains iOS applications. Even if you’re sharing your UI with Compose Multiplatform, 
-  you need this entry point for your iOS app. This is also where you should add SwiftUI code for your project.
+<H1>MVVM Clean Architecture</H1>
 
+<H2>Capas de la arquitectura</H2>
 
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)…
+![Android MVVM Clean Achitecture](https://cursokotlin.com/wp-content/uploads/2021/05/Android-Clean-Architecture.png)
+
+<ol>
+  <li>
+    <p>Presentación (app)</p>
+    <ul>
+      <li><p>UI en general (Jetpack Compose): Se encargan de mostrar las vistas y navegación al usuario</p></li>
+      <li><p>ViewModels: Realizan la comunicación con los casos de uso correspondientes.</p></li>
+      <li><p>States, Effects, Actions: Forman Parte de la arquitectura para sellar contratos de llamadas y respuestas reactivas</p></li>
+    </ul>
+  </li>
+  <li>
+    <p>Usecases</p>
+    <ul>
+      <li><p>Contiene la separación de las funcionalidades disponibles (Principio de responsabilidad unica)</p></li>
+    </ul>
+  </li>
+  <li>
+    <p>Domain</p>
+    <ul>
+      <li><p>Contiene los modelos de negocio y los modelos a transferir a las capas superiores</p></li>
+    </ul>
+  </li>
+  <li>
+    <p>Data</p>
+    <ul>
+      <li><p>DataSources: Contiene las definiciones de los contratos de las fuentes de datos disponibles</p></li>
+      <li>
+        <p>
+          Repositories: Son los encargados de validar cuando es apropiado usar cual data source o bien el mezclado de datos que los datasources proveen
+        </p>        
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p>Framework (app)</p>
+    <ul>
+      <li><p>DataSources: Contiene las implementaciones de las fuentes de datos disponibles (Pueden ser remotos o locales, depende la abstracción)</p></li>
+      <li><p>Module: Inyección de dependencias del repositorie de Data, y los DataSources a utilizar</p></li>
+    </ul>
+  </li>
+<ol>
+<p>
+  
