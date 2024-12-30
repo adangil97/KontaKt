@@ -4,12 +4,6 @@
 |----------|----------|
 | [Video](https://github.com/user-attachments/assets/2755b414-3405-44aa-a178-9eea91f077c7) | [Video](https://github.com/user-attachments/assets/b16a9072-f769-4054-b26d-cc5a66708326) |
 
-<H1>MVVM Clean Architecture</H1>
-
-<H2>Capas de la arquitectura</H2>
-
-![Android MVVM Clean Achitecture](https://cursokotlin.com/wp-content/uploads/2021/05/Android-Clean-Architecture.png)
-
 <H2>Instrucciones para Clonar y Ejecutar el Proyecto KMP</H2>
 
 <h2>Requisitos</h2>
@@ -35,6 +29,12 @@
     <li>Android Studio debería pedirte que sincronices las dependencias del proyecto automáticamente.</li>
     <li>Si no es así, puedes hacerlo manualmente desde la opción <strong>File > Sync Project with Gradle Files</strong>.</li>
 </ul>
+
+<H1>MVVM Clean Architecture</H1>
+
+<H2>Capas de la arquitectura</H2>
+
+![Android MVVM Clean Achitecture](https://cursokotlin.com/wp-content/uploads/2021/05/Android-Clean-Architecture.png)
 
 <ol>
   <li>
