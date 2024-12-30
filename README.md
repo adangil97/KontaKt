@@ -10,6 +10,32 @@
 
 ![Android MVVM Clean Achitecture](https://cursokotlin.com/wp-content/uploads/2021/05/Android-Clean-Architecture.png)
 
+<H2>Instrucciones para Clonar y Ejecutar el Proyecto KMP</H2>
+
+<h2>Requisitos</h2>
+<ul>
+    <li><strong>Android Studio</strong> (con Android Lady Bug o posterior) para ejecutar la parte de Android.</li>
+    <li><strong>MacBook Pro</strong> para ejecutar la parte de iOS debido a las restricciones de Xcode y el desarrollo para iOS.</li>
+    <li><strong>Xcode</strong> instalado en tu MacBook Pro para el desarrollo de iOS.</li>
+</ul>
+
+<h2>Pasos</h2>
+<h3>1. Clonar el Repositorio</h3>
+<p>Abre una terminal y ejecuta el siguiente comando para clonar el repositorio:</p>
+<pre><code>git clone https://github.com/adangil97/KontaKt.git</code></pre>
+
+<h3>2. Abrir el Proyecto en Android Studio</h3>
+<ul>
+    <li>Navega a la carpeta del proyecto y abre el archivo <code>KontaKt</code> con <strong>Android Studio</strong>.</li>
+    <li>Asegúrate de tener Android Lady Bug o posterior para evitar problemas de compatibilidad.</li>
+</ul>
+
+<h3>3. Configuración de Dependencias para Android</h3>
+<ul>
+    <li>Android Studio debería pedirte que sincronices las dependencias del proyecto automáticamente.</li>
+    <li>Si no es así, puedes hacerlo manualmente desde la opción <strong>File > Sync Project with Gradle Files</strong>.</li>
+</ul>
+
 <ol>
   <li>
     <p>Presentación (app)</p>
